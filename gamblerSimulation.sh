@@ -9,7 +9,7 @@ RS=$EVERY_DAY_STAKE
 TotalRS=0
 
 #Initializing the dictionary
-declare -A storeAmount
+declare -A betsOfSum
 PERCENTAGE_LOWER=$(($EVERY_DAY_STAKE-$(($EVERY_DAY_STAKE*50/100)) ))
 PERCENTAGE_UPPER=$(($EVERY_DAY_STAKE+$(($EVERY_DAY_STAKE*50/100)) ))
 
@@ -34,18 +34,9 @@ function monthlyGambling(){
 	for ((day=1;day<=TOTAL_DAYS;day++))
 	do
 		#storing Each Day amount in Dictionary
-		storeAmount[Day$day]=$(gamblerWinLoss)
-		TotalRS=$((TotalRS + ${storeAmount[Day$day]} ))
-		echo "Day $day = ${storeAmount[Day$day]}"
+		betsOfSum[Day$day]=$((${betsOfSum[Day$((day-1))]} + $(gamblerWinLoss) ))
+		echo "Amount on Day-$day = ${betsOfSum[Day$day]}"
 	done
-	
-	#checking for win or loss
-	if [ $TotalRS -gt 0 ]
-	then
-		echo "Total Amount won in 20 Days $TotalRS"
-	else
-		echo "Total Amount loss in 20 Days $TotalRS"
-	fi
 }
 #starting game
 monthlyGambling
