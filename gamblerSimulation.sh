@@ -28,15 +28,25 @@ function gamblerWinLoss(){
 	echo $gainRS
 }
 
-
-#function for Monthly bets
-function monthlyGambling(){
+function monthlyGambling() {
 	for ((day=1;day<=TOTAL_DAYS;day++))
 	do
-		#storing Each Day amount in Dictionary
+		#storing Each Day amount in Dictionary means betsOfSum
 		betsOfSum[Day$day]=$((${betsOfSum[Day$((day-1))]} + $(gamblerWinLoss) ))
-		echo "Amount on Day-$day = ${betsOfSum[Day$day]}"
 	done
+
+	#luckiest and unluckiest day by calling luckyUnluckyDictionary function
+	echo "Luckiest Day is : $( luckyUnluckyDictionary | head -1 ) "
+	echo "Unluckiest Day is : $( luckyUnluckyDictionary | tail -1 ) "
 }
-#starting game
+
+#function to sort all values of betsOfSum
+function luckyUnluckyDictionary(){
+	for day in ${!betsOfSum[@]}
+	do
+		echo "$day : ${betsOfSum[$day]}"
+	done | sort -k3 -rn
+}
+
+#Starting game
 monthlyGambling
