@@ -50,3 +50,20 @@ function luckyUnluckyDictionary(){
 
 #Starting game
 monthlyGambling
+function playNextMonthOrNot(){
+	monthlyGambling
+	#function of check player playing or not
+	while [ ${betsOfSum[Day20]} -gt 0 ]
+	do
+		#echo -e " \e[1;34m Last month amount =${betsOfSum[Day20]} \e[0m \n "
+		read -p " You won .do u want to play for the next month or next time if yes press 'y' otherwise press any key: " playAgain
+		if [ $playAgain == "y" ]
+		then
+			monthlyGambling
+		else
+			exit
+		fi
+	done
+	echo -e "\e[1:35m last month amount= ${betsOfSum[Day20]} \e[0m \n Not Playing next month"
+}
+playNextMonthOrNot
